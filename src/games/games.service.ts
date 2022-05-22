@@ -6,25 +6,34 @@ import { Game } from './entities/game.entitie';
 
 @Injectable()
 export class GamesService {
-  create(createGameDto: CreateGameDto)  {
+  create(createGameDto: CreateGameDto): Promise<Game>  {
    const game: Game = {...createGameDto}
     return this.prisma.game.create({
       data: game,
     })
   }
-  findAll() {
+  findAll(): Promise<Game[]> {
     return this.prisma.game.findMany();
   }
   findOne(id: string): Promise<Game> {
-    throw new Error('Method not implemented.');
+    return this.prisma.game.findUnique({ where: { id } });
   }
-  update(id: string, updateLibDto: UpdateGameDto): Promise<Game> {
-    throw new Error('Method not implemented.');
+  update(id: string, updateGameDto: UpdateGameDto): Promise<Game> {
+    const data: Partial<Game> = { ...updateGameDto };
+
+    return this.prisma.game.update({
+      where: { id },
+      data,
+    });
   }
   constructor(private readonly prisma: PrismaService) {}
 
-  delete(id: string) {
-    throw new Error('Method not implemented.');
+  async delete(id: string) {
+    await this.prisma.game.delete({
+      where: {
+        id,
+      },
+    });
   }
 
 
