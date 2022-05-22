@@ -10,11 +10,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   //Configs. do swagger
   const config = new DocumentBuilder()
-  .setTitle('Steam')
+  .setTitle('Steam Powered APP')
   .setDescription('Aplicação para a gestão de jogos em um aplicativo')
   .setVersion('1.0.0')
   .addTag('Status')
-  .addTag('Genero')
+  .addTag('Genres')
   .addTag('Games')
   .build();
 

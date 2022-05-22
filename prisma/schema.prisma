@@ -32,7 +32,7 @@ model Lib {
 
   model Genre {
   id String @id @default(uuid())
-  genre String
+  genreName String
 
 
   createdAt DateTime @default(now())

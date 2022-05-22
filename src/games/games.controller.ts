@@ -9,7 +9,8 @@ import { UpdateGameDto } from './dto/update.game.dto';
 @Controller('games')
 export class GamesController {
   constructor(private readonly gameService: GamesService){}
-  @Post()
+
+  @Post()//Metodo CREATE
   @ApiOperation({
     summary: "Criar um jogo"
   })
@@ -17,7 +18,7 @@ export class GamesController {
       return this.gameService.create(createGameDto);
     }
 
-  @Get()
+  @Get()//Metodo GETALL
   @ApiOperation({
     summary: "Listar todos os jogos"
   })
@@ -25,7 +26,7 @@ export class GamesController {
     return this.gameService.findAll();
   }
 
-  @Get(':id')
+  @Get(':id')//Metodo GETBYID
   @ApiOperation({
     summary: "Listar um jogo escolhido pelo ID"
   })
@@ -33,7 +34,7 @@ export class GamesController {
     return this.gameService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch(':id')//Metodo UPDATE BY ID
   @ApiOperation({
     summary: "Editar um jogo pelo ID"
   })
@@ -41,7 +42,7 @@ export class GamesController {
       return this.gameService.update(id,updateLibDto)
     }
 
-  @Delete(':id')
+  @Delete(':id')//Metodo DELETEBYID
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
   summary: "Remover um jogo pelo ID"

@@ -6,15 +6,19 @@ import { Game } from './entities/game.entitie';
 
 @Injectable()
 export class GamesService {
-  create(createGameDto: CreateGameDto): Promise<Game>  {
-   const game: Game = {...createGameDto}
+  constructor(private readonly prisma: PrismaService) {}
+
+  create(createGameDto: CreateGameDto): Promise<Game> {
+    const game: Game = { ...createGameDto };
     return this.prisma.game.create({
       data: game,
-    })
+    });
   }
+  
   findAll(): Promise<Game[]> {
     return this.prisma.game.findMany();
   }
+
   findOne(id: string): Promise<Game> {
     return this.prisma.game.findUnique({ where: { id } });
   }
@@ -26,7 +30,6 @@ export class GamesService {
       data,
     });
   }
-  constructor(private readonly prisma: PrismaService) {}
 
   async delete(id: string) {
     await this.prisma.game.delete({
@@ -35,7 +38,4 @@ export class GamesService {
       },
     });
   }
-
-
-
 }
