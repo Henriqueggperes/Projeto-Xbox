@@ -6,8 +6,6 @@ import { Lib} from './entities/lib.entitie';
 @Injectable()
 export class LibService {
 
-  lib: Lib [] = [];
-
   constructor (private readonly prisma: PrismaService){}
 
   findAll(){
