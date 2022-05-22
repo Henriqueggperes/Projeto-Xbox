@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { LibService } from './lib.service';
 import { CreateLibDto } from './dto/create.lib.dto';
 import { Lib } from './entities/lib.entitie';
@@ -42,7 +42,14 @@ export class LibController {
   update(@Param('id') id:string,@Body() updateLibDto: UpdateLibDto): Promise<Lib>{
     return this.libService.update(id,updateLibDto)
   }
-
+@Delete(':id')
+@HttpCode(HttpStatus.NO_CONTENT)
+@ApiOperation({
+summary: "Remover um jogo da biblioteca pelo ID"
+})
+delete(@Param('id') id:string){
+  this.libService.delete(id);
+}
 }
 
 

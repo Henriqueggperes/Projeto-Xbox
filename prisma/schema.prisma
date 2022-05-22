@@ -12,7 +12,7 @@ datasource db {
 
 model Lib {
   id String @id @default(uuid())
-  rate Int
+  name String
   gameDescription String
 
 

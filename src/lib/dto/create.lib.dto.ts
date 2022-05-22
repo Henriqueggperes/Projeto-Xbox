@@ -2,13 +2,13 @@ import { IsPositive,IsNumber, IsNotEmpty, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateLibDto {
- @IsPositive({message:"Numero deve ser positivo"})
- @IsNumber()
- @ApiProperty({
-   description: "Avaliação do jogo",
-   example: 1
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+   description: "Nome do jogo",
+   example: "Super Mario"
   })
-  rate: number;
+  name: string;
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
