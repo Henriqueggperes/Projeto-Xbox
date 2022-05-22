@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateLibDto } from './dto/create.lib.dto';
 import { Lib} from './entities/lib.entitie';
 
 @Injectable()
 export class LibService {
 
- lib: Lib [] = [];
+  lib: Lib [] = [];
 
-  findAll(): Lib[]{
-    return this.lib;
+  constructor (private readonly prisma: PrismaService){}
+
+  findAll(){
+    return this.prisma.lib.findMany();
   }
 
-  create(createLibDto: CreateLibDto): Lib {
-    const Lib: Lib = { id: 'id_aleatorio', ...createLibDto };
-    this.lib.push(Lib)
-    return Lib;
+  create(createLibDto: CreateLibDto) {
+    const Lib: Lib = {...createLibDto};
+
+     return this.prisma.lib.create({
+      data: Lib,
+    });
+
   }
 }

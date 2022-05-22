@@ -1,3 +1,5 @@
 export class Lib{
-  id: string;
+  id?: string
+  rate: number
+  gameDescription: string
 }

@@ -13,7 +13,7 @@ export class CreateLibDto {
   @IsString()
   @ApiProperty({
     description: "Descrição  do jogo",
-    example: 1
+    example: "As aventuras de dois irmãos encanadores que se aventuram em um mundo pixelado!"
    })
   gameDescription: string;
 }

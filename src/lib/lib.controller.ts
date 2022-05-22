@@ -8,15 +8,16 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('lib')
 export class LibController {
 
-  constructor(private libService: LibService){}
+  constructor(private readonly libService: LibService){}
 
   @Get()
-  findAll():Lib[]{
+  findAll(){
     return this.libService.findAll();
   }
 
 @Post()
-  create(@Body() createShopDto: CreateLibDto): Lib{
+  create(@Body() createShopDto: CreateLibDto){
     return this.libService.create(createShopDto);
   }
 }
+ 
