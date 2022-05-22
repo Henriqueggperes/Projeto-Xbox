@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { LibService } from './lib.service';
 import { CreateLibDto } from './dto/create.lib.dto';
 import { Lib } from './entities/lib.entitie';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UpdateLibDto } from './dto/update.lib.dto';
 
 @ApiTags('Library')
 @Controller('lib')
@@ -30,7 +31,18 @@ export class LibController {
 @ApiOperation({
   summary: "Criar um jogo para a biblioteca"
 })
-  create(@Body() createShopDto: CreateLibDto): Promise<Lib>{
-    return this.libService.create(createShopDto);
+  create(@Body() createLibDto: CreateLibDto): Promise<Lib>{
+    return this.libService.create(createLibDto);
   }
+
+@Patch(':id')
+@ApiOperation({
+  summary: "Editar um jogo para a biblioteca pelo ID"
+})
+  update(@Param('id') id:string,@Body() updateLibDto: UpdateLibDto): Promise<Lib>{
+    return this.libService.update(id,updateLibDto)
+  }
+
 }
+
+

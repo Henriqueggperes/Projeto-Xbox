@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateLibDto } from './dto/create.lib.dto';
+import { UpdateLibDto } from './dto/update.lib.dto';
 import { Lib} from './entities/lib.entitie';
 
 @Injectable()
@@ -20,9 +21,17 @@ export class LibService {
   create(createLibDto: CreateLibDto): Promise<Lib> {
     const Lib: Lib = {...createLibDto};
 
-     return this.prisma.lib.create({
+    return this.prisma.lib.create({
       data: Lib,
     });
 
+  }
+  update(id: string, updateLibDto: UpdateLibDto): Promise<Lib> {
+  const data: Partial<Lib> = {...updateLibDto};
+
+  return this.prisma.lib.update({
+    where: {id},
+    data
+  })
   }
 }
