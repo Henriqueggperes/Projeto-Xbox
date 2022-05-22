@@ -9,7 +9,7 @@ import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [LibModule, GenresModule, GamesModule, PrismaModule],
-  controllers: [AppController, GamesController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

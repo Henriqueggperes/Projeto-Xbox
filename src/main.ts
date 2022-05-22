@@ -13,7 +13,7 @@ async function bootstrap() {
   .setTitle('Steam')
   .setDescription('Aplicação para a gestão de jogos em um aplicativo')
   .setVersion('1.0.0')
-  .addTag('status')
+  .addTag('Status')
   .addTag('Genero')
   .addTag('Jogo')
   .build();

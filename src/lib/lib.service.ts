@@ -8,7 +8,7 @@ import { Lib } from './entities/lib.entitie';
 export class LibService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): Promise<Lib[]> {
+  findAll() {
     return this.prisma.lib.findMany();
   }
 

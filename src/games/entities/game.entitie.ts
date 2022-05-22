@@ -1,6 +1,5 @@
 export class Game {
-  id: string
+  id?: string
   gameName: string
   gameRate: number
-  gameRlDate: string
 }
