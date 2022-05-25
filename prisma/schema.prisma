@@ -11,30 +11,61 @@ datasource db {
 }
 
 model Lib {
-  id String @id @default(uuid())
-  name String
-  gameDescription String
+  id              String @id @default(uuid())
+  name            String
+  gameDescription String @map("game_description")
 
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  }
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("lib")
+}
 
-  model Game {
-  id String @id @default(uuid())
-  gameName String
-  gameRate Int
+model Game {
+  id       String @id @default(uuid())
+  gameName String @map("game_name")
+  imdbScore Int    @map("imbd_score")
+  description String
+  year String
+  trailerYouTubeUrl String @map("trailer_youtube_url")
+  gameplayYouTubeUrl String @map("gameplay_youtube_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("game")
+}
+
+model Genre {
+  id    String @id @default(uuid())
+  name String @map("genre")
 
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  }
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("genre")
+}
 
-  model Genre {
-  id String @id @default(uuid())
-  genreName String
+model User {
+  id       String @id @default(uuid())
+  userName String @map("user_name")
+  email String
+  cpf String
+  password String
+  isAdmin Boolean @map("is_admin")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("user")
+}
 
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  }
+model Profile {
+  id  String @id @default(uuid())
+  title String
+  imageUrl String @map("image_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("profile")
+
+}

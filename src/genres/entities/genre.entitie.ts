@@ -1,5 +1,5 @@
 
 export class Genre {
   id?: string
-  genreName: string
+  name: string
 }

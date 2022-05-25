@@ -1,4 +1,4 @@
-import { PartialType } from "@nestjs/mapped-types";
+import { PartialType } from "@nestjs/swagger";
 import { CreateLibDto } from "./create.lib.dto";
 import { ApiProperty } from "@nestjs/swagger";
 export class UpdateLibDto extends PartialType(CreateLibDto){

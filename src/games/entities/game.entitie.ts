@@ -1,5 +1,9 @@
 export class Game {
   id?: string
   gameName: string
-  gameRate: number
+  imdbScore: number
+  description: string
+  year: string
+  trailerYouTubeUrl: string
+  gameplayYouTubeUrl: string
 }
