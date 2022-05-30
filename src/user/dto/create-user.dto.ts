@@ -18,13 +18,7 @@ export class CreateUserDto {
   })
   email: string;
 
-  // @IsUrl()
-  // @IsNotEmpty()
-  // @ApiProperty({
-  //   description: 'Foto do Usuario',
-  //   example: 'Uma foto... Xis! http://urldaimagem.com',
-  // })
-  // image: string;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -51,6 +45,12 @@ export class CreateUserDto {
     example: 'henrique_123lindo',
   })
   confirmPassword: string;
+
+  @ApiProperty({
+    description: 'Campo da entidade USER que irá reservar os perfis atrelados a um Usuario',
+    example: 'henrique_123lindo',
+  })
+   profiles: string[];
 
   @ApiProperty({
     description:'Verifica se o ususário é um administrador',

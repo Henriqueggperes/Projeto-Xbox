@@ -18,4 +18,18 @@ export class CreateProfileDto {
   @IsUrl()
   imageUrl: string;
 
+  @ApiProperty({
+    description:"Campo da entidade Profile que reserva o ID do usuário do atrelado a um ou mais perfis",
+    example:""
+
+  })
+  userId: string
+
+  @ApiProperty({
+    description:"Campo da entidade Profile que reserva os jogos atrelados a um ou mais perfis",
+    example:["Counter Strike", "Minecraft"]
+
+  })
+  games:string[]
+
 }

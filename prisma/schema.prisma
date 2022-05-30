@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Lib {
+model Lib {// Home page
   id              String @id @default(uuid())
   name            String
   gameDescription String @map("game_description")
@@ -22,13 +22,15 @@ model Lib {
 }
 
 model Game {
-  id       String @id @default(uuid())
-  gameName String @map("game_name")
-  imdbScore Int    @map("imbd_score")
-  description String
-  year String
-  trailerYouTubeUrl String @map("trailer_youtube_url")
-  gameplayYouTubeUrl String @map("gameplay_youtube_url")
+  id                 String    @id @default(uuid())
+  gameName           String    @map("game_name")
+  imdbScore          Int       @map("imbd_score")
+  description        String
+  year               String
+  trailerYouTubeUrl  String    @map("trailer_youtube_url")
+  gameplayYouTubeUrl String    @map("gameplay_youtube_url")
+  genre              Genre[]
+  profile            Profile[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -36,8 +38,9 @@ model Game {
 }
 
 model Genre {
-  id    String @id @default(uuid())
+  id   String @id @default(uuid())
   name String @map("genre")
+  game Game[]
 
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -46,26 +49,29 @@ model Genre {
 }
 
 model User {
-  id       String @id @default(uuid())
-  userName String @map("user_name")
-  email String
-  cpf String
+  id       String  @id @default(uuid())
+  userName String  @map("user_name")
+  email    String
+  cpf      String
   password String
-  isAdmin Boolean @map("is_admin")
+  isAdmin  Boolean @map("is_admin")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  profiles   Profile[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
   @@map("user")
 }
 
-
 model Profile {
-  id  String @id @default(uuid())
-  title String
+  id       String @id @default(uuid())
+  User     User   @relation(fields: [userId], references: [id])
+  userId   String @map("user_id")
+  Games     Game[]
+  title    String
   imageUrl String @map("image_url")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  @@map("profile")
 
+  @@map("profile")
 }

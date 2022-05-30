@@ -45,6 +45,22 @@ export class CreateGameDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
+    description: "Campo da entidade que irá reservar os perfis atrelados a um jogo",
+    example: "Henriquelindin"
+  })
+  profiles?: string[]
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    description: "Campo da entidade que irá reservar o gênero atrelado a um jogo",
+    example: "Ação"
+  })
+  genre: string[]
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
     description: "Campo onde a entidade Game irá reservar a URL de uma gameplay do jogo",
     example: "https://www.youtube.com/watch?v=NPl2N9eQOn4"
   })

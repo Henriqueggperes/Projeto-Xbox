@@ -7,6 +7,7 @@ import { UpdateGameDto } from './dto/update.game.dto';
 
 @ApiTags('Games')
 @Controller('games')
+
 export class GamesController {
   constructor(private readonly gameService: GamesService){}
 
@@ -50,6 +51,6 @@ export class GamesController {
   delete(@Param('id') id:string){
     this.gameService.delete(id);
   }
+ }
 
 
-}

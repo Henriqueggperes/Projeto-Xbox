@@ -1,33 +1,101 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { Profile } from './entities/profile.entity';
+
 @Injectable()
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): Promise<Profile[]> {
+  findAll() {
     return this.prisma.profile.findMany();
   }
 
-  create(createProfileDto: CreateProfileDto): Promise<Profile> {
-    const Profile: Profile = { ...createProfileDto };
-    return this.prisma.profile.create({
-      data: Profile,
+ async create(createProfileDto: CreateProfileDto) {
+    const data: Prisma.ProfileCreateInput = {
+      User: {
+        connect: {
+          id: createProfileDto.userId,
+
+        },
+      },
+
+      Games: {
+        connect: createProfileDto.games.map((gameId) => ({
+          id: gameId,
+        })),
+      },
+
+      title: createProfileDto.title,
+      imageUrl:createProfileDto.imageUrl
+    };
+
+     return this.prisma.profile.create({
+      data,
+      select: {
+        id: true,
+        imageUrl: true,
+        title: true,
+        userId: true,
+        User: {
+          select: {
+            userName: true,
+          },
+        },
+        Games:{
+          select:{
+            id: true,
+          }
+        },
+
+      },
     });
   }
 
-  findOne(id: string): Promise<Profile> {
-    return this.prisma.profile.findUnique({ where: { id } });
+  findOne(id: string) {
+    return this.prisma.profile.findUnique({ where: { id }});
   }
 
-  update(id: string, updateProfileDto: UpdateProfileDto): Promise<Profile> {
-    const data: Partial<Profile> = { ...updateProfileDto };
+  update(id: string, updateProfileDto: UpdateProfileDto) {
+    const data: Prisma.ProfileCreateInput = {
+      User: {
+        connect: {
+          id: updateProfileDto.userId,
+
+        },
+      },
+
+      Games: {
+        connect: updateProfileDto.games.map((gameId) => ({
+          id: gameId,
+        })),
+      },
+
+      title: updateProfileDto.title,
+      imageUrl:updateProfileDto.imageUrl
+    };
 
     return this.prisma.profile.update({
       where: { id },
       data,
+      select: {
+        id: true,
+        imageUrl: true,
+        title: true,
+        userId: true,
+        User: {
+          select: {
+            userName: true,
+          },
+        },
+        Games:{
+          select:{
+            id: true,
+          }
+        },
+
+      },
     });
   }
   async delete(id: string) {
@@ -38,4 +106,3 @@ export class ProfileService {
     });
   }
 }
-

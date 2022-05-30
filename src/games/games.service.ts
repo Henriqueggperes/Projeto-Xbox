@@ -4,17 +4,21 @@ import { CreateGameDto } from './dto/create.game.dto';
 import { UpdateGameDto } from './dto/update.game.dto';
 import { Game } from './entities/game.entitie';
 
+
 @Injectable()
 export class GamesService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createGameDto: CreateGameDto): Promise<Game> {
-    const game: Game = { ...createGameDto };
-    return this.prisma.game.create({
-      data: game,
-    });
+    const data = {
+      Genre: {
+        connect:{
+          genre:
+        }
+      }
+
+   }
   }
-  
   findAll(): Promise<Game[]> {
     return this.prisma.game.findMany();
   }
