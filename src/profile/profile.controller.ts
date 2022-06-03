@@ -30,7 +30,7 @@ export class ProfileController {
   @ApiOperation({
     summary: "Listar um perfil escolhido pelo ID"
   })
-  findOne(@Param('id') id:string): Promise<Profile> {
+  findOne(@Param('id') id:string) {
     return this.profileService.findOne(id);
   }
 
@@ -38,7 +38,7 @@ export class ProfileController {
   @ApiOperation({
     summary: "Editar um perfil pelo ID"
   })
-    update(@Param('id') id:string,@Body() updateProfileDto: UpdateProfileDto): Promise<Profile>{
+    update(@Param('id') id:string,@Body() updateProfileDto: UpdateProfileDto){
       return this.profileService.update(id,updateProfileDto)
     }
 

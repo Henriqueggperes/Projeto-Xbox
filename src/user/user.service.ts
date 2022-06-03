@@ -4,6 +4,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import* as bcrypt from 'bcrypt'
+import { Prisma } from '@prisma/client';
+import { profile } from 'console';
+import { Profile } from 'src/profile/entities/profile.entity';
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
@@ -19,7 +22,7 @@ export class UserService {
     isAdmin: true,
   }
 
-  findAll(): Promise<User[]> {
+  findAll() {
     return this.prisma.user.findMany({
       select: this.userSelect,
 
@@ -34,8 +37,20 @@ export class UserService {
 
     delete dto.confirmPassword;
 
-    const data: User = {
-      ...dto,
+    const data: Prisma.UserCreateInput = {
+      cpf: dto.cpf,
+      email: dto.email,
+      isAdmin: dto.isAdmin,
+      userName: dto.userName,
+      profiles: {
+        connectOrCreate: profile.map((profile)=>{
+           return  {
+            where: {title: profile},
+            create: {title: profile}
+          }
+        })
+        },
+
       password: await bcrypt.hash(dto.password, 10),
     };
 

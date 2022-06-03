@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Lib {// Home page
+model Lib {
   id              String @id @default(uuid())
   name            String
   gameDescription String @map("game_description")
@@ -30,7 +30,7 @@ model Game {
   trailerYouTubeUrl  String    @map("trailer_youtube_url")
   gameplayYouTubeUrl String    @map("gameplay_youtube_url")
   genre              Genre[]
-  profile            Profile[]
+  profiles           Profile[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -39,7 +39,7 @@ model Game {
 
 model Genre {
   id   String @id @default(uuid())
-  name String @map("genre")
+  name String @unique
   game Game[]
 
 
@@ -51,12 +51,12 @@ model Genre {
 model User {
   id       String  @id @default(uuid())
   userName String  @map("user_name")
-  email    String
+  email    String  
   cpf      String
   password String
   isAdmin  Boolean @map("is_admin")
 
-  profiles   Profile[]
+  profiles  Profile[]
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   @@map("user")
@@ -65,9 +65,9 @@ model User {
 model Profile {
   id       String @id @default(uuid())
   User     User   @relation(fields: [userId], references: [id])
-  userId   String @map("user_id")
-  Games     Game[]
-  title    String
+  userId   String @map("user_id") @unique
+  Games    Game[]
+  title    String @unique
   imageUrl String @map("image_url")
 
   createdAt DateTime @default(now()) @map("created_at")

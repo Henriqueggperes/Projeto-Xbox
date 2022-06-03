@@ -8,7 +8,7 @@ export class Game {
   description: string
   year: string
   profiles?:  Profile[]
-  genre: Genre[]
+  genre?: Genre[]
   trailerYouTubeUrl: string
   gameplayYouTubeUrl: string
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Profile } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -57,11 +57,11 @@ export class ProfileService {
     return this.prisma.profile.findUnique({ where: { id }});
   }
 
-  update(id: string, updateProfileDto: UpdateProfileDto) {
+  async update(id: string, updateProfileDto: UpdateProfileDto) {
     const data: Prisma.ProfileCreateInput = {
       User: {
         connect: {
-          id: updateProfileDto.userId,
+          id: updateProfileDto.userId
 
         },
       },
@@ -76,7 +76,7 @@ export class ProfileService {
       imageUrl:updateProfileDto.imageUrl
     };
 
-    return this.prisma.profile.update({
+    return await this.prisma.profile.update({
       where: { id },
       data,
       select: {
@@ -94,6 +94,7 @@ export class ProfileService {
             id: true,
           }
         },
+
 
       },
     });

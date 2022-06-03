@@ -10,5 +10,5 @@ export class CreateGenreDto {
     description:"Campo da entidade Genre que guarda os jogos atrelados a um ou mais gêneros",
     example:"Tomb Raider, Counter Strike, Valorant..."
   })
-  game?: string[]
+  gameId?: string
 }

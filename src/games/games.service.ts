@@ -1,23 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGameDto } from './dto/create.game.dto';
 import { UpdateGameDto } from './dto/update.game.dto';
 import { Game } from './entities/game.entitie';
 
-
 @Injectable()
 export class GamesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createGameDto: CreateGameDto): Promise<Game> {
-    const data = {
-      Genre: {
-        connect:{
-          genre:
-        }
-      }
+  async create(createGameDto: CreateGameDto): Promise<Game> {
+    const data: Prisma.GameCreateInput = {
+      gameName: createGameDto.gameName,
+      description: createGameDto.description,
+      gameplayYouTubeUrl: createGameDto.gameplayYouTubeUrl,
+      imdbScore: createGameDto.imdbScore,
+      trailerYouTubeUrl: createGameDto.trailerYouTubeUrl,
+      year: createGameDto.year,
 
-   }
+      genre: {
+        connect: {
+          name: createGameDto.genreName,
+        },
+      },
+    };
+    return await this.prisma.game.create({
+      data,
+      include: {
+        genre: true,
+      },
+    }); 
   }
   findAll(): Promise<Game[]> {
     return this.prisma.game.findMany();
@@ -27,12 +39,48 @@ export class GamesService {
     return this.prisma.game.findUnique({ where: { id } });
   }
   update(id: string, updateGameDto: UpdateGameDto): Promise<Game> {
-    const data: Partial<Game> = { ...updateGameDto };
-
-    return this.prisma.game.update({
+    const game = this.prisma.game.findUnique({
       where: { id },
-      data,
+      include: { genre: true },
     });
+    if (game.genre[0].name == updateGameDto.genreName) {
+      return this.prisma.game.update({
+        where: { id },
+        data: {
+          gameName: updateGameDto.gameName,
+          description: updateGameDto.description,
+          gameplayYouTubeUrl: updateGameDto.gameplayYouTubeUrl,
+          imdbScore: updateGameDto.imdbScore,
+          trailerYouTubeUrl: updateGameDto.trailerYouTubeUrl,
+          year: updateGameDto.year,
+
+          genre: {
+            disconnect: {
+              name: updateGameDto.genreName,
+            },
+          },
+        },
+      });
+    }
+    else{
+      return this.prisma.game.update({
+        where: { id },
+        data: {
+          gameName: updateGameDto.gameName,
+          description: updateGameDto.description,
+          gameplayYouTubeUrl: updateGameDto.gameplayYouTubeUrl,
+          imdbScore: updateGameDto.imdbScore,
+          trailerYouTubeUrl: updateGameDto.trailerYouTubeUrl,
+          year: updateGameDto.year,
+
+          genre: {
+            connect: {
+              name: updateGameDto.genreName,
+            },
+          },
+        },
+      });
+    }
   }
 
   async delete(id: string) {

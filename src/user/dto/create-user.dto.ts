@@ -50,12 +50,12 @@ export class CreateUserDto {
     description: 'Campo da entidade USER que irá reservar os perfis atrelados a um Usuario',
     example: 'henrique_123lindo',
   })
-   profiles: string[];
+   profile?: string;
 
   @ApiProperty({
     description:'Verifica se o ususário é um administrador',
     example: true
   })
-  isAdmin: boolean
+  isAdmin?: boolean
 
 }

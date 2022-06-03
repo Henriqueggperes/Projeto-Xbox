@@ -6,7 +6,7 @@ export class User {
   email: string
   cpf: string
   password: string
-  profiles: Profile[]
+  profiles?: Profile[]
   isAdmin: boolean
 
 
