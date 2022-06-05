@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGenreDto } from './dto/create.genre.dto';
+import { CreateGameGenreDto } from './dto/create.game-genre.dto';
 import { UpdateGenreDto } from './dto/update.genre.dto';
 import { Genre } from './entities/genre.entitie';
 @Injectable()
@@ -12,9 +14,27 @@ export class GenresService {
   }
 
   create(createGenreDto: CreateGenreDto): Promise<Genre> {
-    const genre: Genre = { ...createGenreDto };
+    const data: Prisma.GenreCreateInput = {
+      
+      name: createGenreDto.name,
+      game: {
+        connect: createGenreDto.game.map((gameId) => ({
+          id: gameId,
+        })),
+      },
+    };
     return this.prisma.genre.create({
-      data: genre,
+      data,
+      select: {
+        id: true,
+        name: true,
+        game: {
+          select: {
+            id: true,
+            gameName: true,
+          },
+        },
+      },
     });
   }
 

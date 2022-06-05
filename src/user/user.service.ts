@@ -6,6 +6,7 @@ import { User } from "./entities/user.entity";
 import * as bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
 import { Profile } from "src/profile/entities/profile.entity";
+import { ProfileService } from "src/profile/profile.service";
 
 @Injectable()
 export class UserService {
@@ -20,13 +21,20 @@ export class UserService {
     cpf: true,
     createdAt: true,
     updatedAt: true,
-    isAdmin: true
+    isAdmin: true,
   };
 
-  findAll() {
-    return this.prisma.user.findMany({
-      select: this.userSelect
-
+  async findAll() {
+    return await this.prisma.user.findMany({
+      select: {
+        id: true,
+        userName:true,
+        email: true,
+        cpf: true,
+        password: false,
+        isAdmin: true,
+        profiles:true,
+      }
     });
 
   }
@@ -41,7 +49,6 @@ export class UserService {
     const data: Prisma.UserCreateInput = {
       cpf: dto.cpf,
       email: dto.email,
-      isAdmin: dto.isAdmin,
       userName: dto.userName,
       profiles: {
         create: {
@@ -61,8 +68,8 @@ export class UserService {
       });
   }
 
-  findOne(id: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id }, select: this.userSelect });
+ async findOne(id: string): Promise<User> {
+    return await this.prisma.user.findUnique({ where: { id }, select: this.userSelect });
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<User> {
@@ -82,7 +89,7 @@ export class UserService {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    return this.prisma.user
+    return await this.prisma.user
       .update({
         where: { id },
         data,

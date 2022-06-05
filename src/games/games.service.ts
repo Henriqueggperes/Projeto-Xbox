@@ -26,17 +26,27 @@ export class GamesService {
     };
     return await this.prisma.game.create({
       data,
-      include: {
-        genre: true,
-      },
-    }); 
+      select: {
+      gameName:  true,
+      description: true,
+      gameplayYouTubeUrl:  true,
+      imdbScore:  true,
+      year:  true,
+      trailerYouTubeUrl: true,
+      genre:{
+        select:{
+          name: true
+        }
+      }
+      }},
+    );
   }
   findAll(): Promise<Game[]> {
-    return this.prisma.game.findMany();
+    return this.prisma.game.findMany({include:{genre:true}});
   }
 
   findOne(id: string): Promise<Game> {
-    return this.prisma.game.findUnique({ where: { id } });
+    return this.prisma.game.findUnique({ where: { id }, include:{genre:true} });
   }
   update(id: string, updateGameDto: UpdateGameDto): Promise<Game> {
     const game = this.prisma.game.findUnique({

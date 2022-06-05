@@ -22,13 +22,13 @@ model Lib {
 }
 
 model Game {
-  id                 String    @id @default(uuid())
-  gameName           String    @map("game_name")
-  imdbScore          Int       @map("imbd_score")
+  id                 String        @id @default(uuid())
+  gameName           String        @map("game_name")
+  imdbScore          Int           @map("imbd_score")
   description        String
   year               String
-  trailerYouTubeUrl  String    @map("trailer_youtube_url")
-  gameplayYouTubeUrl String    @map("gameplay_youtube_url")
+  trailerYouTubeUrl  String        @map("trailer_youtube_url")
+  gameplayYouTubeUrl String        @map("gameplay_youtube_url")
   genre              Genre[]
   profiles           Profile[]
 
@@ -38,10 +38,9 @@ model Game {
 }
 
 model Genre {
-  id   String @id @default(uuid())
-  name String @unique
-  game Game[]
-
+  id   String        @id @default(uuid())
+  name String        @unique
+  game   Game[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -51,10 +50,10 @@ model Genre {
 model User {
   id       String  @id @default(uuid())
   userName String  @map("user_name")
-  email    String  
-  cpf      String
+  email    String
+  cpf      String  @unique
   password String
-  isAdmin  Boolean @map("is_admin")
+  isAdmin  Boolean @default(false) @map("is_admin")
 
   profiles  Profile[]
   createdAt DateTime  @default(now()) @map("created_at")
@@ -65,7 +64,7 @@ model User {
 model Profile {
   id       String @id @default(uuid())
   User     User   @relation(fields: [userId], references: [id])
-  userId   String @map("user_id") @unique
+  userId   String @unique @map("user_id")
   Games    Game[]
   title    String @unique
   imageUrl String @map("image_url")
@@ -75,3 +74,14 @@ model Profile {
 
   @@map("profile")
 }
+
+// model GameToGenre {
+//   id     String @id @default(uuid())
+//   game   Game   @relation(fields: [gameId], references: [id])
+//   gameId String @map("game_id")
+
+//   genre   Genre  @relation(fields: [genreId], references: [id])
+//   genreId String @map("genre_id")
+//   @@unique([gameId, genreId])
+//   @@map("game_to_genre")
+// }

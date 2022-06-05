@@ -30,7 +30,7 @@ export class GenresController {
   @ApiOperation({
     summary: "Listar um gênero escolhido pelo ID"
   })
-  findOne(@Param('id') id:string): Promise<Genre> {
+  findOne(@Param('id') id:string){
     return this.genreService.findOne(id);
   }
 
@@ -38,7 +38,7 @@ export class GenresController {
   @ApiOperation({
     summary: "Editar um gênero pelo ID"
   })
-    update(@Param('id') id:string,@Body() updateLibDto: UpdateGenreDto): Promise<Genre>{
+    update(@Param('id') id:string,@Body() updateLibDto: UpdateGenreDto){
       return this.genreService.update(id,updateLibDto)
     }
 

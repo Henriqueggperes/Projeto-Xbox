@@ -52,10 +52,5 @@ export class CreateUserDto {
   })
    profile?: string;
 
-  @ApiProperty({
-    description:'Verifica se o ususário é um administrador',
-    example: true
-  })
-  isAdmin?: boolean
 
 }
