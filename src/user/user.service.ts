@@ -1,17 +1,14 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { User } from "./entities/user.entity";
-import * as bcrypt from "bcrypt";
-import { Prisma } from "@prisma/client";
-import { Profile } from "src/profile/entities/profile.entity";
-import { ProfileService } from "src/profile/profile.service";
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
   private userSelect = {
     id: true,
@@ -22,26 +19,26 @@ export class UserService {
     createdAt: true,
     updatedAt: true,
     isAdmin: true,
+    profiles: true,
   };
 
   async findAll() {
     return await this.prisma.user.findMany({
       select: {
         id: true,
-        userName:true,
+        userName: true,
         email: true,
         cpf: true,
         password: false,
         isAdmin: true,
-        profiles:true,
-      }
+        profiles: true,
+      },
     });
-
   }
 
   async create(dto: CreateUserDto): Promise<User> {
     if (dto.password != dto.confirmPassword) {
-      throw new BadRequestException("As senhas informadas não são iguais.");
+      throw new BadRequestException('As senhas informadas não são iguais.');
     }
 
     delete dto.confirmPassword;
@@ -53,23 +50,25 @@ export class UserService {
       profiles: {
         create: {
           title: dto.userName,
-          imageUrl: "https://thumbs.dreamstime.com/b/perfil-de-usu%C3%A1rio-do-vetor-avatar-padr%C3%A3o-179376714.jpg"
-        }
+          imageUrl:
+            'https://thumbs.dreamstime.com/b/perfil-de-usu%C3%A1rio-do-vetor-avatar-padr%C3%A3o-179376714.jpg',
+        },
       },
 
-
-      password: await bcrypt.hash(dto.password, 10)
+      password: await bcrypt.hash(dto.password, 10),
     };
 
-    return this.prisma.user
-      .create({
-        data,
-        select: this.userSelect
-      });
+    return this.prisma.user.create({
+      data,
+      select: this.userSelect,
+    });
   }
 
- async findOne(id: string): Promise<User> {
-    return await this.prisma.user.findUnique({ where: { id }, select: this.userSelect });
+  async findOne(id: string): Promise<User> {
+    return await this.prisma.user.findUnique({
+      where: { id },
+      select: this.userSelect,
+    });
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<User> {
@@ -77,7 +76,7 @@ export class UserService {
 
     if (dto.password) {
       if (dto.password != dto.confirmPassword) {
-        throw new BadRequestException("As senhas informadas não são iguais.");
+        throw new BadRequestException('As senhas informadas não são iguais.');
       }
     }
 
@@ -89,20 +88,19 @@ export class UserService {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    return await this.prisma.user
-      .update({
-        where: { id },
-        data,
-        select: this.userSelect
-      });
-
+    return await this.prisma.user.update({
+      where: { id },
+      data,
+      select: this.userSelect,
+    });
   }
 
   async delete(id: string) {
     await this.prisma.user.delete({
       where: {
-        id
-      }
+        id,
+      },
+
     });
   }
 }

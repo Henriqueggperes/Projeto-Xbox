@@ -35,14 +35,14 @@ export class CreateUserDto {
   })
   @ApiProperty({
     description: 'Senha do Usuario',
-    example: 'henrique_123lindo',
+    example: 'Y7@4kkmv',
   })
   password: string;
 
 
   @ApiProperty({
     description: 'Confirmação da senha do Usuario',
-    example: 'henrique_123lindo',
+    example: 'Y7@4kkmv',
   })
   confirmPassword: string;
 

@@ -10,12 +10,17 @@ export class GenresService {
   constructor(private readonly prisma: PrismaService) {}
 
   findAll(): Promise<Genre[]> {
-    return this.prisma.genre.findMany();
+    return this.prisma.genre.findMany({
+      include:{
+        game: true,
+      }
+    }
+    );
   }
 
   create(createGenreDto: CreateGenreDto): Promise<Genre> {
     const data: Prisma.GenreCreateInput = {
-      
+
       name: createGenreDto.name,
       game: {
         connect: createGenreDto.game.map((gameId) => ({
@@ -42,8 +47,9 @@ export class GenresService {
     return this.prisma.genre.findUnique({ where: { id } });
   }
 
-  update(id: string, updateGameDto: UpdateGenreDto): Promise<Genre> {
-    const data: Partial<Genre> = { ...updateGameDto };
+  update(id: string, dto: UpdateGenreDto): Promise<Genre> {
+    const data: Partial<Genre> = { ...dto,
+     };
 
     return this.prisma.genre.update({
       where: { id },

@@ -50,7 +50,7 @@ model Genre {
 model User {
   id       String  @id @default(uuid())
   userName String  @map("user_name")
-  email    String
+  email    String  @unique
   cpf      String  @unique
   password String
   isAdmin  Boolean @default(false) @map("is_admin")

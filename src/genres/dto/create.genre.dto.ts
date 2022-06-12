@@ -9,7 +9,7 @@ export class CreateGenreDto {
   @IsUUID(undefined, {each: true})
   @ApiProperty({
     description:"Campo da entidade Genre que guarda os jogos atrelados a um ou mais gêneros",
-    example:"Tomb Raider, Counter Strike, Valorant..."
+    example:["ID do jogo"]
   })
   game?: string[]
 }
