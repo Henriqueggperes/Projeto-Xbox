@@ -96,11 +96,19 @@ export class UserService {
   }
 
   async delete(id: string) {
-    await this.prisma.user.delete({
-      where: {
-        id,
-      },
-
-    });
+    try {
+      await this.prisma.profile.deleteMany({
+        where:{
+          userId:id
+        }
+      })
+      await this.prisma.user.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

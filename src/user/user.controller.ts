@@ -9,11 +9,13 @@ import {
   HttpCode,
   HttpStatus,
   UnprocessableEntityException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('User')
 @Controller('user')
@@ -27,7 +29,8 @@ export class UserController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
 }
-
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get()
   @ApiOperation({
     summary: 'Listar todos os usuarios',
@@ -35,7 +38,8 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
-
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Get(':id')
   @ApiOperation({
     summary: 'Listar um usuario pelo ID',
@@ -43,16 +47,18 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
-
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Patch(':id')
   @ApiOperation({
     summary: 'Atualizar um usuario pelo ID',
   })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    
+
     return this.userService.update(id, updateUserDto);
   }
-
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @Delete(':id')
   @ApiOperation({
     summary: 'Deletar um usuario pelo ID ',

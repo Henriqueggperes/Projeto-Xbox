@@ -1,12 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { GenresService } from './genres.service';
 import { CreateGenreDto } from './dto/create.genre.dto';
 import { Genre } from './entities/genre.entitie';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateGenreDto } from './dto/update.genre.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Genres')
 @Controller('genres')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 export class GenresController {
   constructor(private readonly genreService: GenresService){}
 
