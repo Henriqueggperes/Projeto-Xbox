@@ -5,6 +5,6 @@ import { User } from 'src/user/entities/user.entity';
 export class HomepageService {
   async allInfo(user:User){
 
-    const data = 
+    
   }
 }
