@@ -5,6 +5,8 @@ import { Genre } from './entities/genre.entitie';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateGenreDto } from './dto/update.genre.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/user/entities/user.entity';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
 
 @ApiTags('Genres')
 @Controller('genres')
@@ -25,8 +27,8 @@ export class GenresController {
   @ApiOperation({
     summary: "Criar um novo gênero"
   })
-  create(@Body() createGenreDto: CreateGenreDto) {
-    return this.genreService.create(createGenreDto);
+  create(@Body() createGenreDto: CreateGenreDto, @LoggedUser() user: User) {
+    return this.genreService.create(createGenreDto, user);
   }
 
   @Get(':id')//Metodo GETBYID

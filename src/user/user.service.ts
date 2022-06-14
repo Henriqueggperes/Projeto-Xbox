@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,7 +22,12 @@ export class UserService {
     profiles: true,
   };
 
-  async findAll() {
+
+
+  async findAll(user:User) {
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Você não tem permissão para este recurso')
+    }
     return await this.prisma.user.findMany({
       select: {
         id: true,

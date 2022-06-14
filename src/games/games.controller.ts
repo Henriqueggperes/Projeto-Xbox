@@ -5,6 +5,8 @@ import { Game } from './entities/game.entitie';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateGameDto } from './dto/update.game.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from './../user/entities/user.entity';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
 
 @ApiTags('Games')
 @UseGuards(AuthGuard())
@@ -17,8 +19,8 @@ export class GamesController {
   @ApiOperation({
     summary: "Criar um jogo"
   })
-    create(@Body() createGameDto: CreateGameDto) {
-      return this.gameService.create(createGameDto);
+    create(@LoggedUser() user: User, @Body() createGameDto: CreateGameDto) {
+      return this.gameService.create(user ,createGameDto);
     }
 
   @Get()//Metodo GETALL

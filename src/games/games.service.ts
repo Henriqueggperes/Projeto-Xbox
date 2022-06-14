@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from 'src/user/entities/user.entity';
 import { CreateGameDto } from './dto/create.game.dto';
 import { UpdateGameDto } from './dto/update.game.dto';
 import { Game } from './entities/game.entitie';
@@ -9,7 +10,13 @@ import { Game } from './entities/game.entitie';
 export class GamesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createGameDto: CreateGameDto): Promise<Game> {
+  async create(user: User, createGameDto: CreateGameDto): Promise<Game> {
+    if (!user.isAdmin) {
+      throw new UnauthorizedException(
+        'Você não tem permissão para este recurso ',
+      );
+    }
+
     const data: Prisma.GameCreateInput = {
       gameName: createGameDto.gameName,
       description: createGameDto.description,
@@ -27,26 +34,29 @@ export class GamesService {
     return await this.prisma.game.create({
       data,
       select: {
-      gameName:  true,
-      description: true,
-      gameplayYouTubeUrl:  true,
-      imdbScore:  true,
-      year:  true,
-      trailerYouTubeUrl: true,
-      genre:{
-        select:{
-          name: true
-        }
-      }
-      }},
-    );
+        gameName: true,
+        description: true,
+        gameplayYouTubeUrl: true,
+        imdbScore: true,
+        year: true,
+        trailerYouTubeUrl: true,
+        genre: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
   }
   findAll(): Promise<Game[]> {
-    return this.prisma.game.findMany({include:{genre:true}});
+    return this.prisma.game.findMany({ include: { genre: true } });
   }
 
   findOne(id: string): Promise<Game> {
-    return this.prisma.game.findUnique({ where: { id }, include:{genre:true} });
+    return this.prisma.game.findUnique({
+      where: { id },
+      include: { genre: true },
+    });
   }
   update(id: string, updateGameDto: UpdateGameDto): Promise<Game> {
     const game = this.prisma.game.findUnique({
@@ -71,8 +81,7 @@ export class GamesService {
           },
         },
       });
-    }
-    else{
+    } else {
       return this.prisma.game.update({
         where: { id },
         data: {
