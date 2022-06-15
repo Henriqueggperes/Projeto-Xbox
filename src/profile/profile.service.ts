@@ -54,7 +54,8 @@ export class ProfileService {
   }
 
   findOne(id: string) {
-    return this.prisma.profile.findUnique({ where: { id }});
+    return this.prisma.profile.findUnique({ where: { id },
+    include:{Games:true,}});
   }
 
   async update(id: string, updateProfileDto: UpdateProfileDto) {
