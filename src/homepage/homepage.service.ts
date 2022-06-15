@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Genre } from 'src/genres/entities/genre.entitie';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Profile } from 'src/profile/entities/profile.entity';
 import { User } from 'src/user/entities/user.entity';
 
 
