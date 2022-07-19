@@ -46,11 +46,4 @@ export class CreateUserDto {
   })
   confirmPassword: string;
 
-  @ApiProperty({
-    description: 'Campo da entidade USER que irá reservar os perfis atrelados a um Usuario',
-    example: 'henrique_123lindo',
-  })
-   profile?: string;
-
-
 }
