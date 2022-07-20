@@ -45,5 +45,4 @@ export class CreateUserDto {
     example: 'Y7@4kkmv',
   })
   confirmPassword: string;
-
 }

@@ -4,6 +4,8 @@ import { CreateProfileDto } from './dto/create-profile.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from './../user/entities/user.entity';
+import { LoggedUser } from 'src/auth/logged-user.decorator';
 
 @ApiTags('Profile')
 @UseGuards(AuthGuard())
@@ -16,8 +18,8 @@ export class ProfileController {
   @ApiOperation({
     summary: "Listar todos os perfis do usuário"
   })
-  findAll() {
-    return this.profileService.findAll();
+  findAll(@LoggedUser() user: User) {
+    return this.profileService.findAll(user);
   }
 
   @Post()//Metodo CREATE
