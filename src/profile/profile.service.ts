@@ -35,9 +35,11 @@ export class ProfileService {
       imageUrl:createProfileDto.imageUrl
     };
 
-     return this.prisma.profile.create({
-      data,
-      select: {
+
+
+      return this.prisma.profile.create({
+        data,
+        select: {
         id: true,
         imageUrl: true,
         title: true,
@@ -54,7 +56,7 @@ export class ProfileService {
         },
 
       },
-    });
+    })
   }
 
   findOne(id: string) {
@@ -70,6 +72,7 @@ export class ProfileService {
 
         },
       },
+
       title: updateProfileDto.title,
       imageUrl:updateProfileDto.imageUrl
     };
@@ -105,3 +108,4 @@ export class ProfileService {
     });
   }
 }
+

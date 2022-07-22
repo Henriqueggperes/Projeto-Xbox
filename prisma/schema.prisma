@@ -15,35 +15,37 @@ model Lib {
   name            String
   gameDescription String @map("game_description")
 
-
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("lib")
 }
 
 model Game {
-  id                 String        @id @default(uuid())
-  gameName           String        @map("game_name")
-  imdbScore          Int           @map("imbd_score")
+  id                 String    @id @default(uuid())
+  gameName           String    @map("game_name")
+  imdbScore          Int       @map("imbd_score")
   description        String
   year               String
-  trailerYouTubeUrl  String        @map("trailer_youtube_url")
-  gameplayYouTubeUrl String        @map("gameplay_youtube_url")
+  trailerYouTubeUrl  String    @map("trailer_youtube_url")
+  gameplayYouTubeUrl String    @map("gameplay_youtube_url")
   genre              Genre[]
   profiles           Profile[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("game")
 }
 
 model Genre {
-  id   String        @id @default(uuid())
-  name String        @unique
-  game   Game[]
+  id   String @id @default(uuid())
+  name String @unique
+  game Game[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("genre")
 }
 
@@ -58,6 +60,7 @@ model User {
   profiles  Profile[]
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
+
   @@map("user")
 }
 

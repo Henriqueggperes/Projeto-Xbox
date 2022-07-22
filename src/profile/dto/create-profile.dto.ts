@@ -24,7 +24,7 @@ export class CreateProfileDto {
       'Campo da entidade Profile que reserva o ID do usuário do atrelado a um ou mais perfis',
     example: '',
   })
-  userId: string;
+  userId?: string;
 
   @ApiProperty({
     description:
