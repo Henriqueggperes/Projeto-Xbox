@@ -70,13 +70,6 @@ export class ProfileService {
 
         },
       },
-
-      Games: {
-        connect: updateProfileDto.games.map((gameId) => ({
-          id: gameId,
-        })),
-      },
-
       title: updateProfileDto.title,
       imageUrl:updateProfileDto.imageUrl
     };

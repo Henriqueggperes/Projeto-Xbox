@@ -30,5 +30,5 @@ export class CreateProfileDto {
     description:
       'Campo da entidade Profile que reserva os jogos atrelados a um ou mais perfis',
   })
-  games: string[];
+  games?: string[];
 }
