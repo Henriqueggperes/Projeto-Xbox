@@ -67,7 +67,7 @@ model User {
 model Profile {
   id       String @id @default(uuid())
   User     User   @relation(fields: [userId], references: [id])
-  userId   String @unique @map("user_id")
+  userId   String @map("user_id")
   Games    Game[]
   title    String @unique
   imageUrl String @map("image_url")

@@ -4,7 +4,7 @@ import { Game } from 'src/games/entities/game.entitie';
 export class Profile {
   id?: string;
   title?: string;
-  userId: User;
+  userId?: User;
   games?: Game[];
   imageUrl?: string;
   createdAt?: Date;
