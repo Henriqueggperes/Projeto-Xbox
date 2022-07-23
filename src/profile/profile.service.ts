@@ -12,6 +12,9 @@ export class ProfileService {
     return this.prisma.profile.findMany({
       where: {
         userId:user.id
+      },
+      include:{
+          Games:true
       }
     });
   }
@@ -23,12 +26,6 @@ export class ProfileService {
           id: createProfileDto.userId,
 
         },
-      },
-
-      Games: {
-        connect: createProfileDto.games.map((gameId) => ({
-          id: gameId,
-        })),
       },
 
       title: createProfileDto.title,
