@@ -48,14 +48,6 @@ export class CreateGameDto {
   @IsString()
   @ApiProperty({
     description:
-      'Campo da entidade que irá reservar os perfis atrelados a um jogo',
-    example: 'Henriquelindin',
-  })
-  profiles?: string[];
-
-  @IsString()
-  @ApiProperty({
-    description:
       'Campo da entidade que irá reservar o gênero atrelado a um jogo',
     example: 'Ação',
   })
