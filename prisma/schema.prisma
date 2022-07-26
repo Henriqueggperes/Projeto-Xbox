@@ -25,6 +25,7 @@ model Game {
   id                 String    @id @default(uuid())
   gameName           String    @map("game_name")
   imdbScore          Int       @map("imbd_score")
+  imageUrl           String    @map("image_url")
   description        String
   year               String
   trailerYouTubeUrl  String    @map("trailer_youtube_url")

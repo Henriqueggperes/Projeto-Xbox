@@ -1,4 +1,4 @@
-import { IsPositive, IsNumber, IsNotEmpty, IsString } from 'class-validator';
+import { IsPositive, IsNumber, IsNotEmpty, IsString, isNotEmpty, isURL, IsUrl } from 'class-validator';
 import { ApiOperation, ApiProperty } from '@nestjs/swagger';
 
 export class CreateGameDto {
@@ -25,6 +25,15 @@ export class CreateGameDto {
     example: 5,
   })
   imdbScore: number;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsUrl()
+  @ApiProperty({
+    description:'Campo onde será reservada a imagem de um jogo',
+    example:'http://media.steampowered.com/apps/csgo/blog/images/fb_image.png?v=6'
+  })
+  imageUrl: string;
 
   @IsNotEmpty()
   @IsString()

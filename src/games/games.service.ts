@@ -19,6 +19,7 @@ export class GamesService {
 
     const data: Prisma.GameCreateInput = {
       gameName: createGameDto.gameName,
+      imageUrl: createGameDto.imageUrl,
       description: createGameDto.description,
       gameplayYouTubeUrl: createGameDto.gameplayYouTubeUrl,
       imdbScore: createGameDto.imdbScore,
@@ -34,6 +35,7 @@ export class GamesService {
     return await this.prisma.game.create({
       data,
       select: {
+        imageUrl: true,
         gameName: true,
         description: true,
         gameplayYouTubeUrl: true,
