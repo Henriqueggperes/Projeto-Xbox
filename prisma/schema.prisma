@@ -24,7 +24,7 @@ model Lib {
 model Game {
   id                 String    @id @default(uuid())
   gameName           String    @map("game_name")
-  imdbScore          Int       @map("imbd_score")
+  imdbScore          String       @map("imbd_score")
   imageUrl           String    @map("image_url")
   description        String
   year               String

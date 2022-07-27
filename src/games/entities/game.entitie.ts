@@ -4,7 +4,7 @@ import { Genre } from 'src/genres/entities/genre.entitie';
 export class Game {
   id?: string;
   gameName: string;
-  imdbScore: number;
+  imdbScore: string;
   imageUrl: string;
   description: string;
   year: string;

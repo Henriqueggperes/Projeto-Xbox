@@ -18,13 +18,12 @@ export class CreateGameDto {
   })
   description: string;
 
-  @IsPositive()
-  @IsNumber()
+  @IsString()
   @ApiProperty({
     description: 'Campo onde a entidade Game irá reservar a avaliação do jogo',
     example: 5,
   })
-  imdbScore: number;
+  imdbScore: string;
 
   @IsNotEmpty()
   @IsString()
