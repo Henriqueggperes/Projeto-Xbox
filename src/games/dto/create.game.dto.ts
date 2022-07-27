@@ -18,7 +18,8 @@ export class CreateGameDto {
   })
   description: string;
 
-  
+  @IsPositive()
+  @IsNumber()
   @ApiProperty({
     description: 'Campo onde a entidade Game irá reservar a avaliação do jogo',
     example: 5,
